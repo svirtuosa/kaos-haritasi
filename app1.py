@@ -513,8 +513,10 @@ YORUMLAR = {
     }
 }
 
+ALANLAR = ["alışveriş", "mesajlaşma", "hazırlanma", "plan yapma", "sosyalleşme"]
 
-def tarih_gecerli_mi(gun: int, ay: int) -> bool:
+
+def tarih_gecerli_mi(gun, ay):
     gun_sayilari = {
         1: 31, 2: 29, 3: 31, 4: 30, 5: 31, 6: 30,
         7: 31, 8: 31, 9: 30, 10: 31, 11: 30, 12: 31
@@ -524,7 +526,7 @@ def tarih_gecerli_mi(gun: int, ay: int) -> bool:
     return 1 <= gun <= gun_sayilari[ay]
 
 
-def burc_bul(gun: int, ay: int) -> str | None:
+def burc_bul(gun, ay):
     if (ay == 3 and gun >= 21) or (ay == 4 and gun <= 19):
         return "Koç"
     elif (ay == 4 and gun >= 20) or (ay == 5 and gun <= 20):
@@ -552,35 +554,30 @@ def burc_bul(gun: int, ay: int) -> str | None:
     return None
 
 
-ALANLAR = ["alışveriş", "mesajlaşma", "hazırlanma", "plan yapma", "sosyalleşme"]
-
 st.markdown(
     """
     <style>
     .main-title {
         text-align: center;
-        font-size: 2.3rem;
+        font-size: 2.2rem;
         font-weight: 800;
         margin-bottom: 0.2rem;
     }
     .subtitle {
         text-align: center;
-        color: #666;
-        margin-bottom: 1.2rem;
-    }
-    .result-card {
-        background: #f6f6fb;
-        padding: 18px;
-        border-radius: 16px;
-        border: 1px solid #e4e4ef;
-        margin-top: 10px;
+        color: #9da3af;
+        margin-bottom: 1.4rem;
     }
     .mini-box {
-        background: #ffffff;
-        padding: 12px;
-        border-radius: 12px;
-        border: 1px solid #ececf3;
-        height: 100%;
+        background: #1f2937;
+        color: white;
+        padding: 14px;
+        border-radius: 14px;
+        border: 1px solid #374151;
+        min-height: 120px;
+    }
+    .mini-box strong {
+        color: #f9fafb;
     }
     </style>
     """,
@@ -595,8 +592,10 @@ st.markdown(
 
 with st.form("kaos_formu"):
     col1, col2 = st.columns(2)
+
     with col1:
         gun = st.number_input("Doğum günü", min_value=1, max_value=31, value=14, step=1)
+
     with col2:
         ay = st.number_input("Doğum ayı", min_value=1, max_value=12, value=4, step=1)
 
@@ -609,17 +608,16 @@ if submitted:
         st.error("Geçerli bir tarih gir.")
     else:
         burc = burc_bul(int(gun), int(ay))
+
         if not burc:
             st.error("Burç hesaplanamadı.")
         else:
             sonuc = YORUMLAR[burc][alan]
 
             st.success(f"Burcun bulundu: {burc}")
-
-            st.markdown('<div class="result-card">', unsafe_allow_html=True)
             st.subheader(f"{burc} • {alan.title()}")
 
-            c1, c2 = st.columns([1, 1])
+            c1, c2 = st.columns(2)
             with c1:
                 st.metric("Risk Puanı", f"{sonuc['risk']}/100")
             with c2:
@@ -633,32 +631,32 @@ if submitted:
 
             st.markdown(f"**Kaos Tipi:** {sonuc['kaos_tipi']}")
 
-            a, b = st.columns(2)
-            with a:
+            col_a, col_b = st.columns(2)
+
+            with col_a:
                 st.markdown(
                     f"""
                     <div class="mini-box">
-                    <strong>Güçlü Yönün</strong><br><br>
-                    {sonuc['guclu']}
-                    </div>
-                    """,
-                    unsafe_allow_html=True
-                )
-            with b:
-                st.markdown(
-                    f"""
-                    <div class="mini-box">
-                    <strong>Zayıf Yönün</strong><br><br>
-                    {sonuc['zayif']}
+                        <strong>Güçlü Yönün</strong><br><br>
+                        {sonuc['guclu']}
                     </div>
                     """,
                     unsafe_allow_html=True
                 )
 
-            st.markdown("")
+            with col_b:
+                st.markdown(
+                    f"""
+                    <div class="mini-box">
+                        <strong>Zayıf Yönün</strong><br><br>
+                        {sonuc['zayif']}
+                    </div>
+                    """,
+                    unsafe_allow_html=True
+                )
+
             st.info(f"**Mini Uyarı:** {sonuc['uyari']}")
             st.markdown(f"### Motto\n_{sonuc['motto']}_")
-            st.markdown("</div>", unsafe_allow_html=True)
 
 st.markdown("---")
 st.caption("Python + Streamlit ile hazırlanmıştır.")
