@@ -1,5 +1,6 @@
 import streamlit as st
 import base64
+import random
 from pathlib import Path
 
 st.set_page_config(
@@ -515,7 +516,80 @@ YORUMLAR = {
     }
 }
 
+TAROT_KARTLARI = [
+    {
+        "kart": "Gunes",
+        "anahtar": "aciklik ve guven",
+        "yorum_dusuk": "Bu kart, {alan} alaninda daha acik, net ve rahat bir akisa girdigini gosteriyor. Bugun kendine daha cok guvenerek hareket edebilirsin.",
+        "yorum_orta": "Bu kart, {alan} konusunda icindeki netligi bulursan islerin kolaylasacagini soyluyor. Kucuk bir kararsizlik olsa da ic sesin sana yardim edebilir.",
+        "yorum_yuksek": "Bu kart, {alan} alanindaki karmasayi biraz sakinlik ve ozguvenle yumusatabilecegini soyluyor. Bugun panik yerine netlige donmek sana iyi gelir."
+    },
+    {
+        "kart": "Yildiz",
+        "anahtar": "umut ve denge",
+        "yorum_dusuk": "Bu kart, {alan} konusunda daha hafif ve dengeli bir enerji tasidigini gosteriyor. Olaylara daha pozitif yaklasman seni rahatlatabilir.",
+        "yorum_orta": "Bu kart, {alan} alaninda icini rahatlatacak bir denge aradigini soyluyor. Her seyi ayni anda cozmeye calismak yerine sakin ilerlemek daha iyi olabilir.",
+        "yorum_yuksek": "Bu kart, {alan} konusunda biraz durup nefes alman gerektigini soyluyor. Her sey karisik gelse bile toparlanma sansin hala guclu."
+    },
+    {
+        "kart": "Ay",
+        "anahtar": "belirsizlik ve sezgi",
+        "yorum_dusuk": "Bu kart, {alan} alaninda sezgilerinin guclu oldugunu ama yine de her seyi fazla anlamlandirmaman gerektigini hatirlatiyor.",
+        "yorum_orta": "Bu kart, {alan} konusunda bazen olaylari oldugundan daha karmasik hissedebilecegini soyluyor. Biraz netlik aramak iyi gelebilir.",
+        "yorum_yuksek": "Bu kart, {alan} alaninda belirsizlik hissinin artabilecegini gosteriyor. Bugun hemen sonuc cikarmak yerine bir adim geri cekilmek daha iyi olabilir."
+    },
+    {
+        "kart": "Kule",
+        "anahtar": "ani degisim",
+        "yorum_dusuk": "Bu kart, {alan} alaninda beklenmedik ama yonetilebilir kucuk degisimlere acik oldugunu gosteriyor. Esnek kalirsan sorun buyumeden gecebilir.",
+        "yorum_orta": "Bu kart, {alan} konusunda plan disi bir gelisme olabilecegini soyluyor. Ancak buna hizli uyum saglama sansin da var.",
+        "yorum_yuksek": "Bu kart, {alan} alaninda ani bir karisiklik ya da beklenmedik bir aksaklik yasayabilecegini soyluyor. Panik yapmak yerine toparlanmaya odaklanman en iyisi olur."
+    },
+    {
+        "kart": "Adalet",
+        "anahtar": "denge ve karar",
+        "yorum_dusuk": "Bu kart, {alan} konusunda daha olculu ve dengeli bir noktada oldugunu gosteriyor. Kararlarini sakinlikle verebilirsin.",
+        "yorum_orta": "Bu kart, {alan} alaninda duygularinla mantigini ayni cizgide tutman gerektigini soyluyor. Biraz dusunerek ilerlemek seni rahatlatir.",
+        "yorum_yuksek": "Bu kart, {alan} alaninda acele kararlarin seni yorabilecegini soyluyor. Bugun dengeyi korumak her zamankinden daha onemli olabilir."
+    },
+    {
+        "kart": "Guc",
+        "anahtar": "ic dayaniklilik",
+        "yorum_dusuk": "Bu kart, {alan} alaninda zaten sakin ve dengeli bir guc gosterdigini anlatir. Kucuk ayrintilar seni kolay kolay sarsmaz.",
+        "yorum_orta": "Bu kart, {alan} konusunda biraz sabir ve ic kontrol ile her seyi toparlayabilecegini soyluyor. Hemen tepki vermemek bugunun gucu olabilir.",
+        "yorum_yuksek": "Bu kart, {alan} alanindaki kaosu disaridan degil iceriden yonetmen gerektigini soyluyor. Bugun en buyuk destegin kendi sakinligin olabilir."
+    },
+    {
+        "kart": "Ermis",
+        "anahtar": "geri cekilip dusunmek",
+        "yorum_dusuk": "Bu kart, {alan} konusunda fazla hizlanmak yerine biraz icine donmenin sana iyi gelebilecegini hatirlatiyor.",
+        "yorum_orta": "Bu kart, {alan} alaninda herkesi degil once kendini dinlemen gerektigini soyluyor. Kisa bir durup dusunme ani faydali olabilir.",
+        "yorum_yuksek": "Bu kart, {alan} konusunda fazla uyaranla yorulabilecegini gosteriyor. Bugun biraz geri cekilip sade dusunmek seni toparlayabilir."
+    },
+    {
+        "kart": "Kader Carki",
+        "anahtar": "degisen akis",
+        "yorum_dusuk": "Bu kart, {alan} alaninda akisin senin lehine donebilecegini soyluyor. Kucuk bir aciklik sana iyi firsatlar getirebilir.",
+        "yorum_orta": "Bu kart, {alan} konusunda bir degisim enerjisi oldugunu soyluyor. Esnek kalirsan bu durum seni zorlamaktan cok destekleyebilir.",
+        "yorum_yuksek": "Bu kart, {alan} alaninda olaylarin hizli degisebilecegini gosteriyor. Kontrol etmek yerine uyum saglamak seni daha az yorabilir."
+    },
+    {
+        "kart": "Deli",
+        "anahtar": "cesaret ve ilk adim",
+        "yorum_dusuk": "Bu kart, {alan} konusunda daha rahat ve hafif ilerleyebilecegini gosteriyor. Fazla dusunmeden ama dengeli bir sekilde akabilirsin.",
+        "yorum_orta": "Bu kart, {alan} alaninda biraz daha cesur ama dikkatli davranman gerektigini soyluyor. Yeni bir tavir denemek iyi gelebilir.",
+        "yorum_yuksek": "Bu kart, {alan} konusunda kontrolsuz bir aceleye kapilmaman gerektigini hatirlatiyor. Cesaret guzel, ama yonunu kaybetmeden ilerlemek daha iyi."
+    }
+]
+
 ALANLAR = ["alışveriş", "mesajlaşma", "hazırlanma", "plan yapma", "sosyalleşme"]
+
+
+def image_to_base64(image_path):
+    path = Path(image_path)
+    if not path.exists():
+        return None
+    return base64.b64encode(path.read_bytes()).decode()
 
 
 def tarih_gecerli_mi(gun, ay):
@@ -554,61 +628,6 @@ def burc_bul(gun, ay):
     elif (ay == 2 and gun >= 19) or (ay == 3 and gun <= 20):
         return "Balık"
     return None
-
-
-def set_background(image_path="foto.png"):
-    path = Path(image_path)
-    if not path.exists():
-        return
-
-    encoded = base64.b64encode(path.read_bytes()).decode()
-
-    st.markdown(
-        f"""
-        <style>
-        .stApp {{
-            background:
-                linear-gradient(rgba(8, 10, 20, 0.74), rgba(8, 10, 20, 0.78)),
-                url("data:image/png;base64,{encoded}");
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-        }}
-
-        .main-title {{
-            text-align: center;
-            font-size: 2.2rem;
-            font-weight: 800;
-            margin-bottom: 0.2rem;
-            color: white;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.35);
-        }}
-
-        .subtitle {{
-            text-align: center;
-            color: #e5e7eb;
-            margin-bottom: 1.4rem;
-        }}
-
-        .mini-box {{
-            background: rgba(17, 24, 39, 0.88);
-            color: white;
-            padding: 16px;
-            border-radius: 16px;
-            border: 1px solid rgba(255,255,255,0.10);
-            min-height: 165px;
-            backdrop-filter: blur(6px);
-        }}
-
-        .mini-box strong {{
-            color: #f9fafb;
-            font-size: 1.02rem;
-        }}
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
 
 
 def risk_seviyesi_ve_emoji(risk):
@@ -666,7 +685,148 @@ def uzun_uyari_yorumu(metin):
     )
 
 
-set_background("foto.png")
+def tarot_karti_secimi_hazirla(oturum_anahtari):
+    if st.session_state.get("tarot_oturum_anahtari") != oturum_anahtari:
+        st.session_state["tarot_oturum_anahtari"] = oturum_anahtari
+        st.session_state["acik_tarot_kartlari"] = random.sample(TAROT_KARTLARI, 3)
+        st.session_state["secilen_tarot_index"] = None
+
+
+def tarot_yorumu_getir(kart, risk, alan):
+    if risk >= 70:
+        return kart["yorum_yuksek"].format(alan=alan.lower())
+    elif risk >= 50:
+        return kart["yorum_orta"].format(alan=alan.lower())
+    return kart["yorum_dusuk"].format(alan=alan.lower())
+
+
+background_b64 = image_to_base64("foto.png")
+tarot_b64 = image_to_base64("tarot.png")
+
+background_css = ""
+if background_b64:
+    background_css = f"""
+    .stApp {{
+        background:
+            linear-gradient(rgba(8, 10, 20, 0.74), rgba(8, 10, 20, 0.78)),
+            url("data:image/png;base64,{background_b64}");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }}
+    """
+
+tarot_img_html = ""
+if tarot_b64:
+    tarot_img_html = f'<img src="data:image/png;base64,{tarot_b64}" alt="Tarot Karti" />'
+else:
+    tarot_img_html = '<div class="tarot-fallback">🔮</div>'
+
+st.markdown(
+    f"""
+    <style>
+    {background_css}
+
+    .main-title {{
+        text-align: center;
+        font-size: 2.2rem;
+        font-weight: 800;
+        margin-bottom: 0.2rem;
+        color: white;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.35);
+    }}
+
+    .subtitle {{
+        text-align: center;
+        color: #e5e7eb;
+        margin-bottom: 1.4rem;
+    }}
+
+    .mini-box {{
+        background: rgba(17, 24, 39, 0.88);
+        color: white;
+        padding: 16px;
+        border-radius: 16px;
+        border: 1px solid rgba(255,255,255,0.10);
+        min-height: 165px;
+        backdrop-filter: blur(6px);
+    }}
+
+    .mini-box strong {{
+        color: #f9fafb;
+        font-size: 1.02rem;
+    }}
+
+    .tarot-card-back {{
+        background: rgba(17, 24, 39, 0.88);
+        border: 1px solid rgba(255,255,255,0.10);
+        border-radius: 18px;
+        padding: 14px 10px;
+        text-align: center;
+        min-height: 220px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        backdrop-filter: blur(6px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.20);
+        margin-bottom: 10px;
+    }}
+
+    .tarot-card-back img {{
+        width: 100%;
+        max-width: 120px;
+        border-radius: 12px;
+        margin-bottom: 10px;
+        box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+    }}
+
+    .tarot-fallback {{
+        font-size: 3rem;
+        margin-bottom: 8px;
+    }}
+
+    .tarot-label {{
+        color: #e5e7eb;
+        font-size: 0.95rem;
+        margin-top: 6px;
+    }}
+
+    .tarot-card-front {{
+        background: linear-gradient(180deg, rgba(31,41,55,0.92), rgba(17,24,39,0.95));
+        border: 1px solid rgba(255,255,255,0.12);
+        border-radius: 18px;
+        padding: 20px 16px;
+        text-align: center;
+        color: white;
+        margin-top: 10px;
+        box-shadow: 0 10px 24px rgba(0,0,0,0.25);
+    }}
+
+    .tarot-front-title {{
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin-top: 8px;
+        margin-bottom: 6px;
+    }}
+
+    .tarot-front-key {{
+        color: #d1d5db;
+        font-size: 0.95rem;
+    }}
+
+    .tarot-front-img {{
+        width: 100%;
+        max-width: 170px;
+        border-radius: 14px;
+        box-shadow: 0 8px 18px rgba(0,0,0,0.28);
+        margin-bottom: 10px;
+    }}
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
 st.markdown('<div class="main-title">✨ Burcuna Göre Kaos Haritan ✨</div>', unsafe_allow_html=True)
 st.markdown(
@@ -739,5 +899,56 @@ if submitted:
             st.info(f"**Bugünün Uyarısı:** {uzun_uyari_yorumu(sonuc['uyari'])}")
             st.markdown(f"### Motto\n_{sonuc['motto']}_")
 
-st.markdown("---")
+            tarot_oturum_anahtari = f"{burc}-{alan}-{sonuc['risk']}"
+            tarot_karti_secimi_hazirla(tarot_oturum_anahtari)
 
+            st.markdown("### 🔮 Bugünün Tarot Seçimi")
+            st.write("Aşağıdaki üç karttan birini seç ve bugünkü mini tarot yorumunu gör.")
+
+            tarot_cols = st.columns(3)
+
+            for i, kart in enumerate(st.session_state["acik_tarot_kartlari"]):
+                with tarot_cols[i]:
+                    st.markdown(
+                        f"""
+                        <div class="tarot-card-back">
+                            {tarot_img_html}
+                            <div class="tarot-label">Kart {i+1}</div>
+                        </div>
+                        """,
+                        unsafe_allow_html=True
+                    )
+
+                    if st.button(f"Kart {i+1} seç", key=f"tarot_sec_{i}"):
+                        st.session_state["secilen_tarot_index"] = i
+
+            secilen_index = st.session_state.get("secilen_tarot_index")
+
+            if secilen_index is not None:
+                secilen_kart = st.session_state["acik_tarot_kartlari"][secilen_index]
+                tarot_yorum = tarot_yorumu_getir(secilen_kart, sonuc["risk"], alan)
+
+                tarot_front_img = ""
+                if tarot_b64:
+                    tarot_front_img = f'<img class="tarot-front-img" src="data:image/png;base64,{tarot_b64}" alt="Tarot Karti" />'
+
+                st.markdown(
+                    f"""
+                    <div class="tarot-card-front">
+                        {tarot_front_img}
+                        <div class="tarot-front-title">{secilen_kart['kart']}</div>
+                        <div class="tarot-front-key">{secilen_kart['anahtar']}</div>
+                    </div>
+                    """,
+                    unsafe_allow_html=True
+                )
+
+                st.markdown("#### Tarot Yorumu")
+                st.write(tarot_yorum)
+
+            if st.button("Kartları Yeniden Karıştır", key="tarot_yenile"):
+                st.session_state["acik_tarot_kartlari"] = random.sample(TAROT_KARTLARI, 3)
+                st.session_state["secilen_tarot_index"] = None
+                st.rerun()
+
+st.markdown("---")
