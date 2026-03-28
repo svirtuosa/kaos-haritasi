@@ -109,7 +109,7 @@ YORUMLAR = {
             "guclu": "Sohbeti akıtman",
             "zayif": "Konudan konuya atlaman",
             "uyari": "Bir mesajda tek konuya odaklan.",
-            "motto": "Zeka hızla parlar, netlikle kalır."
+            "motto": "Zekâ hızla parlar, netlikle kalır."
         },
         "hazırlanma": {
             "kaos_tipi": "Aynı anda beş şey yapan",
@@ -518,78 +518,72 @@ YORUMLAR = {
 
 TAROT_KARTLARI = [
     {
-        "kart": "Gunes",
-        "anahtar": "aciklik ve guven",
-        "yorum_dusuk": "Bu kart, {alan} alaninda daha acik, net ve rahat bir akisa girdigini gosteriyor. Bugun kendine daha cok guvenerek hareket edebilirsin.",
-        "yorum_orta": "Bu kart, {alan} konusunda icindeki netligi bulursan islerin kolaylasacagini soyluyor. Kucuk bir kararsizlik olsa da ic sesin sana yardim edebilir.",
-        "yorum_yuksek": "Bu kart, {alan} alanindaki karmasayi biraz sakinlik ve ozguvenle yumusatabilecegini soyluyor. Bugun panik yerine netlige donmek sana iyi gelir."
+        "kart": "Güneş",
+        "anahtar": "açıklık ve güven",
+        "yorum_dusuk": "Bu kart, {alan} alanında daha açık, net ve rahat bir akışa girdiğini gösteriyor. Bugün kendine daha çok güvenerek hareket edebilirsin.",
+        "yorum_orta": "Bu kart, {alan} konusunda içindeki netliği bulursan işlerin kolaylaşacağını söylüyor. Küçük bir kararsızlık olsa da iç sesin sana yardım edebilir.",
+        "yorum_yuksek": "Bu kart, {alan} alanındaki karmaşayı biraz sakinlik ve özgüvenle yumuşatabileceğini söylüyor. Bugün panik yerine netliğe dönmek sana iyi gelir."
     },
     {
-        "kart": "Yildiz",
+        "kart": "Yıldız",
         "anahtar": "umut ve denge",
-        "yorum_dusuk": "Bu kart, {alan} konusunda daha hafif ve dengeli bir enerji tasidigini gosteriyor. Olaylara daha pozitif yaklasman seni rahatlatabilir.",
-        "yorum_orta": "Bu kart, {alan} alaninda icini rahatlatacak bir denge aradigini soyluyor. Her seyi ayni anda cozmeye calismak yerine sakin ilerlemek daha iyi olabilir.",
-        "yorum_yuksek": "Bu kart, {alan} konusunda biraz durup nefes alman gerektigini soyluyor. Her sey karisik gelse bile toparlanma sansin hala guclu."
+        "yorum_dusuk": "Bu kart, {alan} konusunda daha hafif ve dengeli bir enerji taşıdığını gösteriyor. Olaylara daha pozitif yaklaşman seni rahatlatabilir.",
+        "yorum_orta": "Bu kart, {alan} alanında içini rahatlatacak bir denge aradığını söylüyor. Her şeyi aynı anda çözmeye çalışmak yerine sakin ilerlemek daha iyi olabilir.",
+        "yorum_yuksek": "Bu kart, {alan} konusunda biraz durup nefes alman gerektiğini söylüyor. Her şey karışık gelse bile toparlanma şansın hâlâ güçlü."
     },
     {
         "kart": "Ay",
         "anahtar": "belirsizlik ve sezgi",
-        "yorum_dusuk": "Bu kart, {alan} alaninda sezgilerinin guclu oldugunu ama yine de her seyi fazla anlamlandirmaman gerektigini hatirlatiyor.",
-        "yorum_orta": "Bu kart, {alan} konusunda bazen olaylari oldugundan daha karmasik hissedebilecegini soyluyor. Biraz netlik aramak iyi gelebilir.",
-        "yorum_yuksek": "Bu kart, {alan} alaninda belirsizlik hissinin artabilecegini gosteriyor. Bugun hemen sonuc cikarmak yerine bir adim geri cekilmek daha iyi olabilir."
+        "yorum_dusuk": "Bu kart, {alan} alanında sezgilerinin güçlü olduğunu ama yine de her şeyi fazla anlamlandırmaman gerektiğini hatırlatıyor.",
+        "yorum_orta": "Bu kart, {alan} konusunda bazen olayları olduğundan daha karmaşık hissedebileceğini söylüyor. Biraz netlik aramak iyi gelebilir.",
+        "yorum_yuksek": "Bu kart, {alan} alanında belirsizlik hissinin artabileceğini gösteriyor. Bugün hemen sonuç çıkarmak yerine bir adım geri çekilmek daha iyi olabilir."
     },
     {
         "kart": "Kule",
-        "anahtar": "ani degisim",
-        "yorum_dusuk": "Bu kart, {alan} alaninda beklenmedik ama yonetilebilir kucuk degisimlere acik oldugunu gosteriyor. Esnek kalirsan sorun buyumeden gecebilir.",
-        "yorum_orta": "Bu kart, {alan} konusunda plan disi bir gelisme olabilecegini soyluyor. Ancak buna hizli uyum saglama sansin da var.",
-        "yorum_yuksek": "Bu kart, {alan} alaninda ani bir karisiklik ya da beklenmedik bir aksaklik yasayabilecegini soyluyor. Panik yapmak yerine toparlanmaya odaklanman en iyisi olur."
+        "anahtar": "ani değişim",
+        "yorum_dusuk": "Bu kart, {alan} alanında beklenmedik ama yönetilebilir küçük değişimlere açık olduğunu gösteriyor. Esnek kalırsan sorun büyümeden geçebilir.",
+        "yorum_orta": "Bu kart, {alan} konusunda plan dışı bir gelişme olabileceğini söylüyor. Ancak buna hızlı uyum sağlama şansın da var.",
+        "yorum_yuksek": "Bu kart, {alan} alanında ani bir karışıklık ya da beklenmedik bir aksaklık yaşayabileceğini söylüyor. Panik yapmak yerine toparlanmaya odaklanman en iyisi olur."
     },
     {
         "kart": "Adalet",
         "anahtar": "denge ve karar",
-        "yorum_dusuk": "Bu kart, {alan} konusunda daha olculu ve dengeli bir noktada oldugunu gosteriyor. Kararlarini sakinlikle verebilirsin.",
-        "yorum_orta": "Bu kart, {alan} alaninda duygularinla mantigini ayni cizgide tutman gerektigini soyluyor. Biraz dusunerek ilerlemek seni rahatlatir.",
-        "yorum_yuksek": "Bu kart, {alan} alaninda acele kararlarin seni yorabilecegini soyluyor. Bugun dengeyi korumak her zamankinden daha onemli olabilir."
+        "yorum_dusuk": "Bu kart, {alan} konusunda daha ölçülü ve dengeli bir noktada olduğunu gösteriyor. Kararlarını sakinlikle verebilirsin.",
+        "yorum_orta": "Bu kart, {alan} alanında duygularınla mantığını aynı çizgide tutman gerektiğini söylüyor. Biraz düşünerek ilerlemek seni rahatlatır.",
+        "yorum_yuksek": "Bu kart, {alan} alanında acele kararların seni yorabileceğini söylüyor. Bugün dengeyi korumak her zamankinden daha önemli olabilir."
     },
     {
-        "kart": "Guc",
-        "anahtar": "ic dayaniklilik",
-        "yorum_dusuk": "Bu kart, {alan} alaninda zaten sakin ve dengeli bir guc gosterdigini anlatir. Kucuk ayrintilar seni kolay kolay sarsmaz.",
-        "yorum_orta": "Bu kart, {alan} konusunda biraz sabir ve ic kontrol ile her seyi toparlayabilecegini soyluyor. Hemen tepki vermemek bugunun gucu olabilir.",
-        "yorum_yuksek": "Bu kart, {alan} alanindaki kaosu disaridan degil iceriden yonetmen gerektigini soyluyor. Bugun en buyuk destegin kendi sakinligin olabilir."
+        "kart": "Güç",
+        "anahtar": "iç dayanıklılık",
+        "yorum_dusuk": "Bu kart, {alan} alanında zaten sakin ve dengeli bir güç gösterdiğini anlatır. Küçük ayrıntılar seni kolay kolay sarsmaz.",
+        "yorum_orta": "Bu kart, {alan} konusunda biraz sabır ve iç kontrol ile her şeyi toparlayabileceğini söylüyor. Hemen tepki vermemek bugünün gücü olabilir.",
+        "yorum_yuksek": "Bu kart, {alan} alanındaki kaosu dışarıdan değil içeriden yönetmen gerektiğini söylüyor. Bugün en büyük desteğin kendi sakinliğin olabilir."
     },
     {
-        "kart": "Ermis",
-        "anahtar": "geri cekilip dusunmek",
-        "yorum_dusuk": "Bu kart, {alan} konusunda fazla hizlanmak yerine biraz icine donmenin sana iyi gelebilecegini hatirlatiyor.",
-        "yorum_orta": "Bu kart, {alan} alaninda herkesi degil once kendini dinlemen gerektigini soyluyor. Kisa bir durup dusunme ani faydali olabilir.",
-        "yorum_yuksek": "Bu kart, {alan} konusunda fazla uyaranla yorulabilecegini gosteriyor. Bugun biraz geri cekilip sade dusunmek seni toparlayabilir."
+        "kart": "Ermiş",
+        "anahtar": "geri çekilip düşünmek",
+        "yorum_dusuk": "Bu kart, {alan} konusunda fazla hızlanmak yerine biraz içine dönmenin sana iyi gelebileceğini hatırlatıyor.",
+        "yorum_orta": "Bu kart, {alan} alanında herkesi değil önce kendini dinlemen gerektiğini söylüyor. Kısa bir durup düşünme anı faydalı olabilir.",
+        "yorum_yuksek": "Bu kart, {alan} konusunda fazla uyaranla yorulabileceğini gösteriyor. Bugün biraz geri çekilip sade düşünmek seni toparlayabilir."
     },
     {
-        "kart": "Kader Carki",
-        "anahtar": "degisen akis",
-        "yorum_dusuk": "Bu kart, {alan} alaninda akisin senin lehine donebilecegini soyluyor. Kucuk bir aciklik sana iyi firsatlar getirebilir.",
-        "yorum_orta": "Bu kart, {alan} konusunda bir degisim enerjisi oldugunu soyluyor. Esnek kalirsan bu durum seni zorlamaktan cok destekleyebilir.",
-        "yorum_yuksek": "Bu kart, {alan} alaninda olaylarin hizli degisebilecegini gosteriyor. Kontrol etmek yerine uyum saglamak seni daha az yorabilir."
+        "kart": "Kader Çarkı",
+        "anahtar": "değişen akış",
+        "yorum_dusuk": "Bu kart, {alan} alanında akışın senin lehine dönebileceğini söylüyor. Küçük bir açıklık sana iyi fırsatlar getirebilir.",
+        "yorum_orta": "Bu kart, {alan} konusunda bir değişim enerjisi olduğunu söylüyor. Esnek kalırsan bu durum seni zorlamaktan çok destekleyebilir.",
+        "yorum_yuksek": "Bu kart, {alan} alanında olayların hızlı değişebileceğini gösteriyor. Kontrol etmek yerine uyum sağlamak seni daha az yorabilir."
     },
     {
         "kart": "Deli",
-        "anahtar": "cesaret ve ilk adim",
-        "yorum_dusuk": "Bu kart, {alan} konusunda daha rahat ve hafif ilerleyebilecegini gosteriyor. Fazla dusunmeden ama dengeli bir sekilde akabilirsin.",
-        "yorum_orta": "Bu kart, {alan} alaninda biraz daha cesur ama dikkatli davranman gerektigini soyluyor. Yeni bir tavir denemek iyi gelebilir.",
-        "yorum_yuksek": "Bu kart, {alan} konusunda kontrolsuz bir aceleye kapilmaman gerektigini hatirlatiyor. Cesaret guzel, ama yonunu kaybetmeden ilerlemek daha iyi."
+        "anahtar": "cesaret ve ilk adım",
+        "yorum_dusuk": "Bu kart, {alan} konusunda daha rahat ve hafif ilerleyebileceğini gösteriyor. Fazla düşünmeden ama dengeli bir şekilde akabilirsin.",
+        "yorum_orta": "Bu kart, {alan} alanında biraz daha cesur ama dikkatli davranman gerektiğini söylüyor. Yeni bir tavır denemek iyi gelebilir.",
+        "yorum_yuksek": "Bu kart, {alan} konusunda kontrolsüz bir aceleye kapılmaman gerektiğini hatırlatıyor. Cesaret güzel, ama yönünü kaybetmeden ilerlemek daha iyi."
     }
 ]
 
 ALANLAR = ["alışveriş", "mesajlaşma", "hazırlanma", "plan yapma", "sosyalleşme"]
 
-
-def image_to_base64(image_path):
-    path = Path(image_path)
-    if not path.exists():
-        return None
-    return base64.b64encode(path.read_bytes()).decode()
 
 def image_to_base64(image_path):
     path = Path(image_path)
@@ -634,6 +628,7 @@ def burc_bul(gun, ay):
     elif (ay == 2 and gun >= 19) or (ay == 3 and gun <= 20):
         return "Balık"
     return None
+
 
 def risk_seviyesi_ve_emoji(risk):
     if risk >= 70:
@@ -732,7 +727,7 @@ if background_b64:
 
 tarot_back_html = ""
 if tarot_b64:
-    tarot_back_html = f'<img src="data:image/png;base64,{tarot_b64}" alt="Tarot Karti" />'
+    tarot_back_html = f'<img src="data:image/png;base64,{tarot_b64}" alt="Tarot Kartı" />'
 else:
     tarot_back_html = '<div class="tarot-fallback">🔮</div>'
 
@@ -971,4 +966,5 @@ if st.session_state.get("sonuc_hazir"):
         st.rerun()
 
 st.markdown("---")
+
 st.caption("Eğlence amaçlıdır gerçekleri yansıtmamaktadır ✨")
