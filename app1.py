@@ -591,6 +591,49 @@ def image_to_base64(image_path):
         return None
     return base64.b64encode(path.read_bytes()).decode()
 
+def image_to_base64(image_path):
+    path = Path(image_path)
+    if not path.exists():
+        return None
+    return base64.b64encode(path.read_bytes()).decode()
+
+
+def tarih_gecerli_mi(gun, ay):
+    gun_sayilari = {
+        1: 31, 2: 29, 3: 31, 4: 30, 5: 31, 6: 30,
+        7: 31, 8: 31, 9: 30, 10: 31, 11: 30, 12: 31
+    }
+    if ay not in gun_sayilari:
+        return False
+    return 1 <= gun <= gun_sayilari[ay]
+
+
+def burc_bul(gun, ay):
+    if (ay == 3 and gun >= 21) or (ay == 4 and gun <= 19):
+        return "Koç"
+    elif (ay == 4 and gun >= 20) or (ay == 5 and gun <= 20):
+        return "Boğa"
+    elif (ay == 5 and gun >= 21) or (ay == 6 and gun <= 20):
+        return "İkizler"
+    elif (ay == 6 and gun >= 21) or (ay == 7 and gun <= 22):
+        return "Yengeç"
+    elif (ay == 7 and gun >= 23) or (ay == 8 and gun <= 22):
+        return "Aslan"
+    elif (ay == 8 and gun >= 23) or (ay == 9 and gun <= 22):
+        return "Başak"
+    elif (ay == 9 and gun >= 23) or (ay == 10 and gun <= 22):
+        return "Terazi"
+    elif (ay == 10 and gun >= 23) or (ay == 11 and gun <= 21):
+        return "Akrep"
+    elif (ay == 11 and gun >= 22) or (ay == 12 and gun <= 21):
+        return "Yay"
+    elif (ay == 12 and gun >= 22) or (ay == 1 and gun <= 19):
+        return "Oğlak"
+    elif (ay == 1 and gun >= 20) or (ay == 2 and gun <= 18):
+        return "Kova"
+    elif (ay == 2 and gun >= 19) or (ay == 3 and gun <= 20):
+        return "Balık"
+    return None
 
 def risk_seviyesi_ve_emoji(risk):
     if risk >= 70:
