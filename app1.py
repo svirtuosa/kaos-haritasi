@@ -640,7 +640,6 @@ def risk_seviyesi_ve_emoji(risk):
 
 def uzun_risk_yorumu(alan, kaos_tipi, risk):
     seviye, _ = risk_seviyesi_ve_emoji(risk)
-
     if seviye == "Yüksek":
         return (
             f"Bu alanda kaos enerjin bugün oldukça {seviye.lower()} görünüyor. "
@@ -717,11 +716,11 @@ if background_b64:
     }}
     """
 
-tarot_img_html = ""
+tarot_back_html = ""
 if tarot_b64:
-    tarot_img_html = f'<img src="data:image/png;base64,{tarot_b64}" alt="Tarot Karti" />'
+    tarot_back_html = f'<img src="data:image/png;base64,{tarot_b64}" alt="Tarot Karti" />'
 else:
-    tarot_img_html = '<div class="tarot-fallback">🔮</div>'
+    tarot_back_html = '<div class="tarot-fallback">🔮</div>'
 
 st.markdown(
     f"""
@@ -828,6 +827,11 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+if "sonuc_hazir" not in st.session_state:
+    st.session_state["sonuc_hazir"] = False
+if "form_hata" not in st.session_state:
+    st.session_state["form_hata"] = None
+
 st.markdown('<div class="main-title">✨ Burcuna Göre Kaos Haritan ✨</div>', unsafe_allow_html=True)
 st.markdown(
     '<div class="subtitle">Doğum tarihini gir, alanını seç ve burcuna göre minik kaos profilini gör.</div>',
@@ -849,106 +853,120 @@ with st.form("kaos_formu"):
 
 if submitted:
     if not tarih_gecerli_mi(int(gun), int(ay)):
-        st.error("Geçerli bir tarih gir.")
+        st.session_state["form_hata"] = "Geçerli bir tarih gir."
+        st.session_state["sonuc_hazir"] = False
     else:
         burc = burc_bul(int(gun), int(ay))
-
         if not burc:
-            st.error("Burç hesaplanamadı.")
+            st.session_state["form_hata"] = "Burç hesaplanamadı."
+            st.session_state["sonuc_hazir"] = False
         else:
-            sonuc = YORUMLAR[burc][alan]
-            risk_seviye, risk_emoji = risk_seviyesi_ve_emoji(sonuc["risk"])
+            st.session_state["form_hata"] = None
+            st.session_state["sonuc_hazir"] = True
+            st.session_state["burc"] = burc
+            st.session_state["alan"] = alan
+            st.session_state["sonuc"] = YORUMLAR[burc][alan]
 
-            st.success(f"Burcun bulundu: {burc}")
-            st.markdown(f"### {risk_emoji} {burc} • {alan.title()}")
-            st.progress(sonuc["risk"] / 100)
+if st.session_state.get("form_hata"):
+    st.error(st.session_state["form_hata"])
 
-            col_m1, col_m2 = st.columns(2)
-            with col_m1:
-                st.metric("Risk Puanı", f"{sonuc['risk']}/100")
-            with col_m2:
-                st.metric("Risk Seviyesi", risk_seviye)
+if st.session_state.get("sonuc_hazir"):
+    burc = st.session_state["burc"]
+    alan = st.session_state["alan"]
+    sonuc = st.session_state["sonuc"]
 
-            st.markdown(f"**Kaos Tipi:** {sonuc['kaos_tipi']}")
-            st.markdown(f"**Risk Yorumu:** {uzun_risk_yorumu(alan, sonuc['kaos_tipi'], sonuc['risk'])}")
+    risk_seviye, risk_emoji = risk_seviyesi_ve_emoji(sonuc["risk"])
 
-            col_a, col_b = st.columns(2)
+    st.success(f"Burcun bulundu: {burc}")
+    st.markdown(f"### {risk_emoji} {burc} • {alan.title()}")
+    st.progress(sonuc["risk"] / 100)
 
-            with col_a:
-                st.markdown(
-                    f"""
-                    <div class="mini-box">
-                        <strong>⭐ Güçlü Yönün</strong><br><br>
-                        {uzun_guclu_yorum(sonuc['guclu'])}
-                    </div>
-                    """,
-                    unsafe_allow_html=True
-                )
+    col_m1, col_m2 = st.columns(2)
+    with col_m1:
+        st.metric("Risk Puanı", f"{sonuc['risk']}/100")
+    with col_m2:
+        st.metric("Risk Seviyesi", risk_seviye)
 
-            with col_b:
-                st.markdown(
-                    f"""
-                    <div class="mini-box">
-                        <strong>⚠️ Zayıf Yönün</strong><br><br>
-                        {uzun_zayif_yorum(sonuc['zayif'])}
-                    </div>
-                    """,
-                    unsafe_allow_html=True
-                )
+    st.markdown(f"**Kaos Tipi:** {sonuc['kaos_tipi']}")
+    st.markdown(f"**Risk Yorumu:** {uzun_risk_yorumu(alan, sonuc['kaos_tipi'], sonuc['risk'])}")
 
-            st.info(f"**Bugünün Uyarısı:** {uzun_uyari_yorumu(sonuc['uyari'])}")
-            st.markdown(f"### Motto\n_{sonuc['motto']}_")
+    col_a, col_b = st.columns(2)
 
-            tarot_oturum_anahtari = f"{burc}-{alan}-{sonuc['risk']}"
-            tarot_karti_secimi_hazirla(tarot_oturum_anahtari)
+    with col_a:
+        st.markdown(
+            f"""
+            <div class="mini-box">
+                <strong>⭐ Güçlü Yönün</strong><br><br>
+                {uzun_guclu_yorum(sonuc['guclu'])}
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
 
-            st.markdown("### 🔮 Bugünün Tarot Seçimi")
-            st.write("Aşağıdaki üç karttan birini seç ve bugünkü mini tarot yorumunu gör.")
+    with col_b:
+        st.markdown(
+            f"""
+            <div class="mini-box">
+                <strong>⚠️ Zayıf Yönün</strong><br><br>
+                {uzun_zayif_yorum(sonuc['zayif'])}
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
 
-            tarot_cols = st.columns(3)
+    st.info(f"**Bugünün Uyarısı:** {uzun_uyari_yorumu(sonuc['uyari'])}")
+    st.markdown(f"### Motto\n_{sonuc['motto']}_")
 
-            for i, kart in enumerate(st.session_state["acik_tarot_kartlari"]):
-                with tarot_cols[i]:
-                    st.markdown(
-                        f"""
-                        <div class="tarot-card-back">
-                            {tarot_img_html}
-                            <div class="tarot-label">Kart {i+1}</div>
-                        </div>
-                        """,
-                        unsafe_allow_html=True
-                    )
+    tarot_oturum_anahtari = f"{burc}-{alan}-{sonuc['risk']}"
+    tarot_karti_secimi_hazirla(tarot_oturum_anahtari)
 
-                    if st.button(f"Kart {i+1} seç", key=f"tarot_sec_{i}"):
-                        st.session_state["secilen_tarot_index"] = i
+    st.markdown("### 🔮 Bugünün Tarot Seçimi")
+    st.write("Aşağıdaki üç karttan birini seç ve bugünkü mini tarot yorumunu gör.")
 
-            secilen_index = st.session_state.get("secilen_tarot_index")
+    tarot_cols = st.columns(3)
 
-            if secilen_index is not None:
-                secilen_kart = st.session_state["acik_tarot_kartlari"][secilen_index]
-                tarot_yorum = tarot_yorumu_getir(secilen_kart, sonuc["risk"], alan)
+    for i, kart in enumerate(st.session_state["acik_tarot_kartlari"]):
+        with tarot_cols[i]:
+            st.markdown(
+                f"""
+                <div class="tarot-card-back">
+                    {tarot_back_html}
+                    <div class="tarot-label">Kart {i+1}</div>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
 
-                tarot_front_img = ""
-                if tarot_b64:
-                    tarot_front_img = f'<img class="tarot-front-img" src="data:image/png;base64,{tarot_b64}" alt="Tarot Karti" />'
+            if st.button(f"Kart {i+1} seç", key=f"tarot_sec_{i}"):
+                st.session_state["secilen_tarot_index"] = i
 
-                st.markdown(
-                    f"""
-                    <div class="tarot-card-front">
-                        {tarot_front_img}
-                        <div class="tarot-front-title">{secilen_kart['kart']}</div>
-                        <div class="tarot-front-key">{secilen_kart['anahtar']}</div>
-                    </div>
-                    """,
-                    unsafe_allow_html=True
-                )
+    secilen_index = st.session_state.get("secilen_tarot_index")
 
-                st.markdown("#### Tarot Yorumu")
-                st.write(tarot_yorum)
+    if secilen_index is not None:
+        secilen_kart = st.session_state["acik_tarot_kartlari"][secilen_index]
+        tarot_yorum = tarot_yorumu_getir(secilen_kart, sonuc["risk"], alan)
 
-            if st.button("Kartları Yeniden Karıştır", key="tarot_yenile"):
-                st.session_state["acik_tarot_kartlari"] = random.sample(TAROT_KARTLARI, 3)
-                st.session_state["secilen_tarot_index"] = None
-                st.rerun()
+        tarot_front_img = ""
+        if tarot_b64:
+            tarot_front_img = f'<img class="tarot-front-img" src="data:image/png;base64,{tarot_b64}" alt="Tarot Karti" />'
+
+        st.markdown(
+            f"""
+            <div class="tarot-card-front">
+                {tarot_front_img}
+                <div class="tarot-front-title">{secilen_kart['kart']}</div>
+                <div class="tarot-front-key">{secilen_kart['anahtar']}</div>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+        st.markdown("#### Tarot Yorumu")
+        st.write(tarot_yorum)
+
+    if st.button("Kartları Yeniden Karıştır", key="tarot_yenile"):
+        st.session_state["acik_tarot_kartlari"] = random.sample(TAROT_KARTLARI, 3)
+        st.session_state["secilen_tarot_index"] = None
+        st.rerun()
 
 st.markdown("---")
