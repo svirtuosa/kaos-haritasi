@@ -740,5 +740,4 @@ if submitted:
             st.markdown(f"### Motto\n_{sonuc['motto']}_")
 
 st.markdown("---")
-st.caption("Bugünkü kaos enerjin burada sona erdi ✨")
-st.caption("Python + Streamlit ile hazırlanmıştır.")
+
