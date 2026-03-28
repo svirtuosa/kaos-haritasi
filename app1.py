@@ -1,4 +1,6 @@
 import streamlit as st
+import base64
+from pathlib import Path
 
 st.set_page_config(
     page_title="Burcuna Göre Kaos Haritan",
@@ -554,39 +556,121 @@ def burc_bul(gun, ay):
     return None
 
 
-st.markdown(
-    """
-    <style>
-    .main-title {
-        text-align: center;
-        font-size: 2.2rem;
-        font-weight: 800;
-        margin-bottom: 0.2rem;
-    }
-    .subtitle {
-        text-align: center;
-        color: #9da3af;
-        margin-bottom: 1.4rem;
-    }
-    .mini-box {
-        background: #1f2937;
-        color: white;
-        padding: 14px;
-        border-radius: 14px;
-        border: 1px solid #374151;
-        min-height: 120px;
-    }
-    .mini-box strong {
-        color: #f9fafb;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
+def set_background(image_path="foto.png"):
+    path = Path(image_path)
+    if not path.exists():
+        return
+
+    encoded = base64.b64encode(path.read_bytes()).decode()
+
+    st.markdown(
+        f"""
+        <style>
+        .stApp {{
+            background:
+                linear-gradient(rgba(8, 10, 20, 0.74), rgba(8, 10, 20, 0.78)),
+                url("data:image/png;base64,{encoded}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }}
+
+        .main-title {{
+            text-align: center;
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 0.2rem;
+            color: white;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.35);
+        }}
+
+        .subtitle {{
+            text-align: center;
+            color: #e5e7eb;
+            margin-bottom: 1.4rem;
+        }}
+
+        .mini-box {{
+            background: rgba(17, 24, 39, 0.88);
+            color: white;
+            padding: 16px;
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.10);
+            min-height: 165px;
+            backdrop-filter: blur(6px);
+        }}
+
+        .mini-box strong {{
+            color: #f9fafb;
+            font-size: 1.02rem;
+        }}
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
+
+def risk_seviyesi_ve_emoji(risk):
+    if risk >= 70:
+        return "Yüksek", "🔴"
+    elif risk >= 50:
+        return "Orta", "🟡"
+    return "Düşük", "🟢"
+
+
+def uzun_risk_yorumu(alan, kaos_tipi, risk):
+    seviye, _ = risk_seviyesi_ve_emoji(risk)
+
+    if seviye == "Yüksek":
+        return (
+            f"Bu alanda kaos enerjin bugün oldukça {seviye.lower()} görünüyor. "
+            f"Özellikle '{kaos_tipi.lower()}' bir eğilim göstermeye daha açık olabilirsin. "
+            f"Bu yüzden {alan} sırasında aceleci davranmak ya da ilk tepkinle hareket etmek "
+            f"seni gereksiz bir karışıklığın içine çekebilir."
+        )
+    elif seviye == "Orta":
+        return (
+            f"Bu alandaki risk seviyen {seviye.lower()} düzeyde. "
+            f"'{kaos_tipi.lower()}' tarafın zaman zaman öne çıkabilir; ancak dikkatli davranırsan "
+            f"dengeyi koruman mümkün görünüyor. Yani küçük bir kontrol ile durumu lehine çevirebilirsin."
+        )
+    else:
+        return (
+            f"Bu alanda risk seviyen {seviye.lower()} görünüyor. "
+            f"'{kaos_tipi.lower()}' bir eğilimin olsa da bunu yönetme konusunda daha dengeli kalabilirsin. "
+            f"Yine de küçük ayrıntıları tamamen göz ardı etmemek iyi olabilir."
+        )
+
+
+def uzun_guclu_yorum(metin):
+    return (
+        f"Bu alandaki en güçlü tarafın, {metin.lower()}. "
+        f"Bu özellik seni hem daha etkili hem de daha dikkat çekici kılar. "
+        f"Doğru kullandığında bulunduğun durumu kendi lehine çevirmene gerçekten yardımcı olabilir."
+    )
+
+
+def uzun_zayif_yorum(metin):
+    return (
+        f"Zayıf tarafında ise {metin.lower()} öne çıkıyor. "
+        f"Bu durum bazen seni gereksiz yere yorabilir ya da küçük bir konuyu olduğundan daha büyük hissettirebilir. "
+        f"Özellikle stres arttığında bu yönün daha belirgin hâle gelebilir."
+    )
+
+
+def uzun_uyari_yorumu(metin):
+    return (
+        f"Bugün kendine küçük bir hatırlatma olarak şunu aklında tutabilirsin: {metin} "
+        f"Küçük bir durup düşünme anı, hem daha rahat hissetmeni hem de daha dengeli karar vermeni sağlayabilir."
+    )
+
+
+set_background("foto.png")
 
 st.markdown('<div class="main-title">✨ Burcuna Göre Kaos Haritan ✨</div>', unsafe_allow_html=True)
 st.markdown(
-    '<div class="subtitle">Doğum tarihini gir, alanını seç ve kaos profilini keşfet.</div>',
+    '<div class="subtitle">Doğum tarihini gir, alanını seç ve burcuna göre minik kaos profilini gör.</div>',
     unsafe_allow_html=True
 )
 
@@ -601,7 +685,7 @@ with st.form("kaos_formu"):
 
     alan = st.selectbox("Bugün hangi alanda kaosunu görmek istiyorsun?", ALANLAR)
 
-    submitted = st.form_submit_button("Kaos Haritamı Göster")
+    submitted = st.form_submit_button("Kaos Haritamı Aç")
 
 if submitted:
     if not tarih_gecerli_mi(int(gun), int(ay)):
@@ -613,23 +697,20 @@ if submitted:
             st.error("Burç hesaplanamadı.")
         else:
             sonuc = YORUMLAR[burc][alan]
+            risk_seviye, risk_emoji = risk_seviyesi_ve_emoji(sonuc["risk"])
 
             st.success(f"Burcun bulundu: {burc}")
-            st.subheader(f"{burc} • {alan.title()}")
+            st.markdown(f"### {risk_emoji} {burc} • {alan.title()}")
+            st.progress(sonuc["risk"] / 100)
 
-            c1, c2 = st.columns(2)
-            with c1:
+            col_m1, col_m2 = st.columns(2)
+            with col_m1:
                 st.metric("Risk Puanı", f"{sonuc['risk']}/100")
-            with c2:
-                if sonuc["risk"] >= 70:
-                    risk_seviye = "Yüksek"
-                elif sonuc["risk"] >= 50:
-                    risk_seviye = "Orta"
-                else:
-                    risk_seviye = "Düşük"
+            with col_m2:
                 st.metric("Risk Seviyesi", risk_seviye)
 
             st.markdown(f"**Kaos Tipi:** {sonuc['kaos_tipi']}")
+            st.markdown(f"**Risk Yorumu:** {uzun_risk_yorumu(alan, sonuc['kaos_tipi'], sonuc['risk'])}")
 
             col_a, col_b = st.columns(2)
 
@@ -637,8 +718,8 @@ if submitted:
                 st.markdown(
                     f"""
                     <div class="mini-box">
-                        <strong>Güçlü Yönün</strong><br><br>
-                        {sonuc['guclu']}
+                        <strong>⭐ Güçlü Yönün</strong><br><br>
+                        {uzun_guclu_yorum(sonuc['guclu'])}
                     </div>
                     """,
                     unsafe_allow_html=True
@@ -648,15 +729,16 @@ if submitted:
                 st.markdown(
                     f"""
                     <div class="mini-box">
-                        <strong>Zayıf Yönün</strong><br><br>
-                        {sonuc['zayif']}
+                        <strong>⚠️ Zayıf Yönün</strong><br><br>
+                        {uzun_zayif_yorum(sonuc['zayif'])}
                     </div>
                     """,
                     unsafe_allow_html=True
                 )
 
-            st.info(f"**Mini Uyarı:** {sonuc['uyari']}")
+            st.info(f"**Bugünün Uyarısı:** {uzun_uyari_yorumu(sonuc['uyari'])}")
             st.markdown(f"### Motto\n_{sonuc['motto']}_")
 
 st.markdown("---")
+st.caption("Bugünkü kaos enerjin burada sona erdi ✨")
 st.caption("Python + Streamlit ile hazırlanmıştır.")
