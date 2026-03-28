@@ -587,7 +587,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-st.markdown('<div class="main-title">✨ Burcuna Göre Kaos Haritan ✨</div>', unsafe_allow_html=True)
+st.markdown('<div class="main-title">✨ Burcuna Göre Haritan ✨</div>', unsafe_allow_html=True)
 st.markdown(
     '<div class="subtitle">Doğum tarihini gir, alanını seç ve kaos profilini keşfet.</div>',
     unsafe_allow_html=True
@@ -602,7 +602,7 @@ with st.form("kaos_formu"):
 
     alan = st.selectbox("Bugün hangi alanda kaosunu görmek istiyorsun?", ALANLAR)
 
-    submitted = st.form_submit_button("Kaos Haritamı Göster")
+    submitted = st.form_submit_button("Haritamı Göster")
 
 if submitted:
     if not tarih_gecerli_mi(int(gun), int(ay)):
