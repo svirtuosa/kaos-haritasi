@@ -709,7 +709,7 @@ def tarot_yorumu_getir(kart, risk, alan):
 
 
 background_b64 = image_to_base64("foto.png")
-tarot_b64 = image_to_base64("tarottt.png")
+tarot_b64 = image_to_base64("tarot.png")
 
 background_css = ""
 if background_b64:
