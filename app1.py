@@ -1,7 +1,7 @@
 import streamlit as st
 
 st.set_page_config(
-    page_title="Burcuna Göre Kaos Haritan",
+    page_title="Burcuna Göre Senin Haritan",
     page_icon="✨",
     layout="centered"
 )
