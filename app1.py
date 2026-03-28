@@ -871,7 +871,7 @@ if st.session_state.get("sonuc_hazir"):
             f"""
             <div class="mini-box">
                 <strong>⚠️ Zayıf Yönün</strong><br><br>
-                {uzun_zayif_yorumu(sonuc['zayif'])}
+                {uzun_zayif_yorum(sonuc['zayif'])}
             </div>
             """,
             unsafe_allow_html=True
