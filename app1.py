@@ -1121,3 +1121,4 @@ if st.session_state.get("sonuc_hazir"):
         st.rerun()
 
 st.markdown("---")
+st.caption("Bu uygulamadaki tüm yorumlar eğlence amaçlıdır ve gerçek bir analiz niteliği taşımaz.")
